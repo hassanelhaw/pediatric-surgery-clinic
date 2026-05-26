@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title id="app-title-tag">جراحة الأطفال - مستشفى العريش العام</title>
+    
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Link CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Container App Wrapper -->
+    <div class="app-container" id="appWrapper">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <!-- Stethoscope / Health Icon -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                <h1 data-i18n="appLogo">جراحة الأطفال<br><span style="font-size:0.75rem; font-weight:400; opacity:0.8;">مستشفى العريش العام</span></h1>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-view="dashboard">
+                    <button>
+                        <!-- Grid Icon -->
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                        <span data-i18n="menuDashboard">الرئيسية</span>
+                    </button>
+                </li>
+                <li class="menu-item" data-view="patients">
+                    <button>
+                        <!-- Users Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        <span data-i18n="menuPatients">سجل الحالات</span>
+                    </button>
+                </li>
+                <li class="menu-item" data-view="schedule">
+                    <button>
+                        <!-- Calendar Icon -->
+                        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span data-i18n="menuSchedule">مواعيد العمليات</span>
+                    </button>
+                </li>
+                <li class="menu-item" data-view="database">
+                    <button>
+                        <!-- Database Icon -->
+                        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+                        <span data-i18n="menuDatabase">البيانات والنسخ</span>
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <!-- Language Toggle Button -->
+                <button class="btn-control lang-switch" id="langSwitchBtn">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <span>English</span>
+                </button>
+                <!-- Logout Button -->
+                <button class="btn-control" id="logoutBtn" style="margin-top: 8px; border-color: rgba(255,255,255,0.1); color: #ef4444; background: rgba(239, 68, 68, 0.05); width: 100%; justify-content: start;">
+                    <svg viewBox="0 0 24 24" style="stroke: currentColor; fill: none; stroke-width: 2; width: 16px; height: 16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span data-i18n="btnLogout">تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Panel Body -->
+        <main class="main-wrapper">
+            
+            <!-- Top Header Navbar -->
+            <header class="main-header">
+                <div class="header-title-area">
+                    <button class="menu-toggle" id="menuToggleBtn" aria-label="Toggle Navigation Sidebar">
+                        <!-- Hamburger Icon -->
+                        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    <div class="header-title">
+                        <h2 id="pageTitleText" data-i18n="titleDashboard">لوحة المتابعة العامة</h2>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="btn-control btn-primary" id="openAddPatientModalBtn">
+                        <!-- User Plus Icon -->
+                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                        <span data-i18n="btnAddNewCase">إضافة حالة جديدة</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Content Wrapper -->
+            <div class="content-body">
+                
+                <!-- 1. VIEW: DASHBOARD -->
+                <section class="page-view active" id="view-dashboard">
+                    <!-- Metric Cards -->
+                    <div class="dashboard-summary-grid">
+                        <div class="summary-card card-exam" data-filter-status="examined">
+                            <div class="summary-info">
+                                <h3 data-i18n="metricAwaitingSurgeries">حالات بانتظار عملية</h3>
+                                <div class="metric" id="stat-examined">0</div>
+                            </div>
+                            <div class="summary-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                        </div>
+                        <div class="summary-card card-scheduled" data-filter-status="scheduled">
+                            <div class="summary-info">
+                                <h3 data-i18n="metricScheduled">عمليات مجدولة</h3>
+                                <div class="metric" id="stat-scheduled">0</div>
+                            </div>
+                            <div class="summary-icon-box">
+                                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                        </div>
+                        <div class="summary-card card-completed" data-filter-status="completed">
+                            <div class="summary-info">
+                                <h3 data-i18n="metricCompleted">عمليات تمت</h3>
+                                <div class="metric" id="stat-completed">0</div>
+                            </div>
+                            <div class="summary-icon-box">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                        </div>
+                        <div class="summary-card card-all" data-filter-status="all">
+                            <div class="summary-info">
+                                <h3 data-i18n="metricAllCases">إجمالي الحالات بالعيادة</h3>
+                                <div class="metric" id="stat-all">0</div>
+                            </div>
+                            <div class="summary-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Graph charts layout -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3 data-i18n="chartSurgeryTypes">إحصائيات العمليات حسب النوع</h3>
+                            <div class="svg-chart-container" id="barChartContainer">
+                                <!-- Generated Dynamically via App.js -->
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <h3 data-i18n="chartStatusBreakdown">توزيع الحالات حسب الحالة</h3>
+                            <div class="svg-chart-container" id="pieChartContainer">
+                                <!-- Generated Dynamically via App.js -->
+                            </div>
+                            <div class="chart-legend" id="pieChartLegend">
+                                <!-- Legend items generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 2. VIEW: PATIENTS DATABASE -->
+                <section class="page-view" id="view-patients">
+                    <!-- Filters Toolbar -->
+                    <div class="toolbar-card">
+                        <div class="search-box-container">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="searchInput" placeholder="ابحث بالاسم، التشخيص أو رقم الهاتف...">
+                        </div>
+                        
+                        <div class="filters-wrapper">
+                            <select id="filterOperation" class="filter-select">
+                                <option value="" data-i18n="optAllOperations">جميع أنواع العمليات</option>
+                                <!-- Presets added via JS -->
+                            </select>
+                            
+                            <select id="filterStatus" class="filter-select">
+                                <option value="" data-i18n="optAllStatuses">جميع الحالات</option>
+                                <option value="examined" data-i18n="statusExamined">بانتظار تحديد موعد</option>
+                                <option value="scheduled" data-i18n="statusScheduled">تم تحديد عملية</option>
+                                <option value="completed" data-i18n="statusCompleted">تم إجراء العملية ومتابعة</option>
+                                <option value="archived" data-i18n="statusArchived">مؤرشف ومكتمل</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Table Database list -->
+                    <div class="patient-list-card">
+                        <div class="table-responsive">
+                            <table class="patient-table">
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="tableHeadName">اسم الطفل والسن</th>
+                                        <th data-i18n="tableHeadDiagnosis">نوع العملية المقترحة</th>
+                                        <th data-i18n="tableHeadDate">موعد العملية</th>
+                                        <th data-i18n="tableHeadFollowup">آخر متابعة</th>
+                                        <th data-i18n="tableHeadStatus">الحالة</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientTableBody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Empty State -->
+                        <div class="empty-state" id="dbEmptyState" style="display: none;">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            <h4 data-i18n="emptyStateTitle">لا توجد حالات مسجلة حالياً</h4>
+                            <p data-i18n="emptyStateDesc">قم بإضافة حالة جديدة أو قم بتغيير فلاتر التصفية لعرض النتائج.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 3. VIEW: SURGERY CALENDAR -->
+                <section class="page-view" id="view-schedule">
+                    <div class="schedule-header">
+                        <h3 id="scheduleHeaderTitle" data-i18n="upcomingSurgeriesTitle">العمليات الجراحية المجدولة القادمة</h3>
+                        <div class="filters-wrapper">
+                            <select id="scheduleFilterPriority" class="filter-select">
+                                <option value="" data-i18n="optAllPriorities">جميع الأولويات</option>
+                                <option value="routine" data-i18n="priorityRoutine">روتينية</option>
+                                <option value="urgent" data-i18n="priorityUrgent">عاجلة</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-list" id="scheduleItemsContainer">
+                        <!-- Generated dynamically -->
+                    </div>
+                </section>
+                
+                <!-- 4. VIEW: DATABASE ACTIONS -->
+                <section class="page-view" id="view-database">
+                    <div class="chart-card">
+                        <h3 data-i18n="backupTitle">إدارة قواعد البيانات والنسخ الاحتياطي</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;" data-i18n="backupDesc">
+                            بما أن هذا التطبيق يعمل محلياً بالكامل على متصفحك للحفاظ على سرعة وخصوصية بيانات مرضى العيادة، يرجى القيام بتنزيل نسخة احتياطية من البيانات بشكل دوري لتجنب فقدانها عند مسح ذاكرة المتصفح.
+                        </p>
+                        
+                        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+                            <button class="btn-control btn-primary" id="exportDataBtn">
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                <span data-i18n="btnExportBackup">تصدير نسخة احتياطية (JSON)</span>
+                            </button>
+                            
+                            <button class="btn-control" id="triggerImportBtn">
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span data-i18n="btnImportBackup">استيراد قاعدة بيانات</span>
+                            </button>
+                            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                            
+                            <button class="btn-control" id="resetDbBtn" style="border-color: #fee2e2; color: #b91c1c;">
+                                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                <span data-i18n="btnResetDb">تهيئة ومسح قاعدة البيانات</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+        
+        <!-- SIDE OUT DRAWER: PATIENT DETAILS FILE -->
+        <div class="drawer-overlay" id="drawerOverlay"></div>
+        <div class="drawer-container" id="patientDrawer">
+            <div class="drawer-header">
+                <div class="drawer-title-box">
+                    <h3 id="drawerPatientName">محمد أحمد علي</h3>
+                    <span id="drawerPatientMeta">السن: 3 سنوات | هاتف: 01023456789</span>
+                </div>
+                <button class="modal-close-btn" id="closeDrawerBtn" aria-label="Close Patient Drawer">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            
+            <div class="drawer-body">
+                <!-- Patient Medical File Details -->
+                <div class="drawer-section">
+                    <div class="drawer-section-title" data-i18n="drawerSecClinical">البيانات السريرية والتشخيص</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label" data-i18n="lblOperationType">العملية المقترحة</span>
+                            <span class="info-value" id="drawerOpType">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label" data-i18n="lblCaseStatus">حالة المريض الحالية</span>
+                            <span class="info-value" id="drawerStatusTag">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label" data-i18n="lblWeight">الوزن الحالي</span>
+                            <span class="info-value" id="drawerWeight">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label" data-i18n="lblRegDate">تاريخ أول كشف</span>
+                            <span class="info-value" id="drawerExamDate">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Tools -->
+                <div class="drawer-section">
+                    <div class="drawer-section-title" data-i18n="drawerSecActions">الإجراءات والجدولة</div>
+                    
+                    <!-- Quick Schedule Action -->
+                    <div class="form-grid" style="margin-top: 6px;">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label class="form-label" data-i18n="lblChangeStatus">تغيير حالة المريض</label>
+                            <select id="drawerStatusSelector" class="filter-select" style="width: 100%;">
+                                <option value="examined" data-i18n="statusExamined">بانتظار تحديد موعد</option>
+                                <option value="scheduled" data-i18n="statusScheduled">تم تحديد عملية</option>
+                                <option value="completed" data-i18n="statusCompleted">تم إجراء العملية ومتابعة</option>
+                                <option value="archived" data-i18n="statusArchived">مؤرشف ومكتمل</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="drawerScheduleGroupDate" style="display: none;">
+                            <label class="form-label" data-i18n="lblOperationDate">موعد العملية المقترح</label>
+                            <input type="date" id="drawerOpDateInput" class="form-input">
+                        </div>
+                        
+                        <div class="form-group" id="drawerScheduleGroupPriority" style="display: none;">
+                            <label class="form-label" data-i18n="lblPriority">الأولوية</label>
+                            <select id="drawerPriorityInput" class="filter-select" style="width: 100%;">
+                                <option value="routine" data-i18n="priorityRoutine">روتينية</option>
+                                <option value="urgent" data-i18n="priorityUrgent">عاجلة</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-control btn-primary" id="drawerSaveActionsBtn" style="margin-top: 14px; width: 100%; justify-content: center;">
+                        <span data-i18n="btnSaveUpdates">حفظ تحديثات الحالة</span>
+                    </button>
+                </div>
+                
+                <!-- Visits and Follow-up timeline -->
+                <div class="drawer-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div class="drawer-section-title" style="margin-bottom:0; border:none;" data-i18n="drawerSecTimeline">الخط الزمني للمتابعات</div>
+                        <button class="btn-control" id="drawerAddFollowupBtn" style="padding: 4px 10px; font-size: 0.75rem;">
+                            <span data-i18n="btnAddFollowup">إضافة متابعة</span>
+                        </button>
+                    </div>
+                    
+                    <div class="timeline" id="drawerTimeline">
+                        <!-- Events generated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MODAL: ADD / EDIT PATIENT -->
+        <div class="modal-overlay" id="addPatientModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitleText" data-i18n="modalTitleAdd">إضافة حالة مريض جديدة</h3>
+                    <button class="modal-close-btn" id="closeAddPatientModalBtn" aria-label="Close Modal">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                
+                <form id="patientForm" onsubmit="event.preventDefault();">
+                    <div class="modal-body">
+                        <div class="form-grid">
+                            <!-- Hidden input for editing ID -->
+                            <input type="hidden" id="formPatientId" value="">
+                            
+                            <div class="form-group form-group-full">
+                                <label class="form-label" for="formPatientName" data-i18n="formName">اسم الطفل ثلاثي *</label>
+                                <input type="text" id="formPatientName" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="formAgeYears" data-i18n="formAgeYears">العمر (سنوات) *</label>
+                                <input type="number" id="formAgeYears" class="form-input" min="0" max="18" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="formAgeMonths" data-i18n="formAgeMonths">الشهور الإضافية</label>
+                                <input type="number" id="formAgeMonths" class="form-input" min="0" max="11" value="0">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="formWeight" data-i18n="formWeight">الوزن (كيلو جرام)</label>
+                                <input type="number" id="formWeight" class="form-input" min="0" max="120" step="0.1">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="formPhone" data-i18n="formPhone">رقم هاتف ولي الأمر</label>
+                                <input type="tel" id="formPhone" class="form-input" placeholder="01xxxxxxxxx">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="formExamDate" data-i18n="formExamDate">تاريخ الكشف والتشخيص *</label>
+                                <input type="date" id="formExamDate" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="formOpType" data-i18n="formOpType">نوع العملية الجراحية *</label>
+                                <select id="formOpType" class="filter-select" style="width: 100%; height: 42px;" required>
+                                    <!-- Options filled dynamically, last option is "Other / أخرى" -->
+                                </select>
+                            </div>
+                            
+                            <!-- Custom surgery option (hidden unless "Other" selected) -->
+                            <div class="form-group form-group-full" id="customOpGroup" style="display: none;">
+                                <label class="form-label" for="formCustomOp" data-i18n="formCustomOp">اسم العملية بالتفصيل</label>
+                                <input type="text" id="formCustomOp" class="form-input">
+                            </div>
+                            
+                            <div class="form-group form-group-full">
+                                <label class="form-label" for="formNotes" data-i18n="formDiagnosis">التشخيص التفصيلي وملاحظات الكشف</label>
+                                <textarea id="formNotes" class="form-input" placeholder="اكتب التشخيص الإكلينيكي أو الملاحظات الطبية..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn-control" id="cancelAddPatientBtn" data-i18n="btnCancel">إلغاء</button>
+                        <button type="submit" class="btn-control btn-primary" id="savePatientBtn" data-i18n="btnSave">حفظ الحالة</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- MODAL: ADD FOLLOW-UP VISIT -->
+        <div class="modal-overlay" id="followupModal">
+            <div class="modal-content" style="max-width: 440px;">
+                <div class="modal-header">
+                    <h3 data-i18n="modalTitleFollowup">تسجيل زيارة متابعة</h3>
+                    <button class="modal-close-btn" id="closeFollowupModalBtn" aria-label="Close Modal">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                
+                <form id="followupForm" onsubmit="event.preventDefault();">
+                    <div class="modal-body">
+                        <div class="form-grid">
+                            <div class="form-group form-group-full">
+                                <label class="form-label" for="followupDate" data-i18n="followupDate">تاريخ الزيارة *</label>
+                                <input type="date" id="followupDate" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group form-group-full">
+                                <label class="form-label" for="followupNotes" data-i18n="followupNotes">ملاحظات الفحص والتقدم المباشر</label>
+                                <textarea id="followupNotes" class="form-input" required placeholder="مثال: الجرح نظيف، لا يوجد تورم، يوصى بالعودة بعد شهر..."></textarea>
+                            </div>
+                            
+                            <div class="form-group form-group-full">
+                                <label class="form-checkbox-container">
+                                    <input type="checkbox" id="followupArchiveCase">
+                                    <span data-i18n="chkArchiveCase">أرشفة الحالة (تم الشفاء بالكامل وتوقف المتابعة)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn-control" id="cancelFollowupBtn" data-i18n="btnCancel">إلغاء</button>
+                        <button type="submit" class="btn-control btn-primary" id="saveFollowupBtn" data-i18n="btnSave">حفظ المتابعة</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- CUSTOM TOAST CONTAINER FOR ALERTS -->
+        <div class="toast-container" id="toastContainer"></div>
+        
+    </div>
+
+    <!-- LOGIN SCREEN OVERLAY -->
+    <div class="login-screen-overlay" id="loginScreen">
+        <div class="login-card">
+            <div class="login-brand">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 48px; height: 48px; fill: var(--primary-medium); margin-bottom: 12px;">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                <h1 data-i18n="appLogo" data-i18n-html="true">جراحة الأطفال<br><span style="font-size:0.75rem; font-weight:400; opacity:0.8;">مستشفى العريش العام</span></h1>
+            </div>
+            <form id="loginForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail" data-i18n="formEmail">البريد الإلكتروني</label>
+                    <input type="email" id="loginEmail" class="form-input" required placeholder="name@clinic.com" style="direction: ltr; text-align: start;">
+                </div>
+                <div class="form-group" style="margin-top: 14px;">
+                    <label class="form-label" for="loginPassword" data-i18n="formPassword">كلمة المرور</label>
+                    <input type="password" id="loginPassword" class="form-input" required placeholder="••••••••" style="direction: ltr; text-align: start;">
+                </div>
+                <div id="loginErrorMsg" class="login-error-box" style="display: none; color: #b91c1c; background: #fee2e2; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 500; margin-top: 14px; text-align: center;"></div>
+                <button type="submit" class="btn-control btn-primary" id="loginSubmitBtn" style="margin-top: 20px; width: 100%; justify-content: center; height: 44px;">
+                    <span id="loginSubmitText">تسجيل الدخول</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Link JS Logic script -->
+    <script src="app.js"></script>
+</body>
+</html>
