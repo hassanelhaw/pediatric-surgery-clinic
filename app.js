@@ -5,8 +5,8 @@
 // --- SUPABASE CONFIGURATION ---
 // Paste your Supabase Project credentials here to enable collaborative cloud database.
 // If left as default, the application will run in local-only mode (LocalStorage).
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://lesakyiknftciqxacybt.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxlc2FreWlrbmZ0Y2lxeGFjeWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTM2MDcsImV4cCI6MjA5NTM2OTYwN30.1c6e0DPjJJj4eeQ-QjhpwHS18ms-DqF1px3jHk0KMOk";
 
 let supabaseClient = null;
 if (typeof supabase !== 'undefined' && SUPABASE_URL !== "YOUR_SUPABASE_URL" && SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY") {
