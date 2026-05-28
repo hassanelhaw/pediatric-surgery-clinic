@@ -122,7 +122,36 @@ const TRANSLATIONS = {
         kg: 'كجم',
         btnLogout: 'تسجيل الخروج',
         formEmail: 'البريد الإلكتروني',
-        formPassword: 'كلمة المرور'
+        formPassword: 'كلمة المرور',
+        btnStaffPortal: 'بوابة الكادر الطبي',
+        heroTitle: 'عيادة جراحة الأطفال المتميزة',
+        heroSubtitle: 'مستشفى العريش العام - رعاية طبية متكاملة وجراحة آمنة لأطفالنا',
+        heroDesc: 'نقدم أحدث الحلول الجراحية للأطفال وحديثي الولادة بأعلى معايير الأمان والدقة الطبية، تحت إشراف نخبة من الأطباء المتخصصين.',
+        btnExploreServices: 'استكشف خدماتنا العلاجية',
+        titlePublicServices: 'الخدمات الجراحية التخصصية بالعيادة',
+        srvHerniaTitle: 'عمليات الفتق الإربي والسرّي',
+        srvHerniaDesc: 'إصلاح الفتق عند الرضع والأطفال بأحدث الطرق التجميلية الدقيقة التي تضمن سرعة الشفاء وتفادت المضاعفات.',
+        srvTestisTitle: 'علاج وتثبيت الخصية المعلقة',
+        srvTestisDesc: 'الفحص المبكر والتدخل الجراحي التجميلي لتثبيت الخصية في موضعها الطبيعي لحماية وظيفتها ونموها السليم.',
+        srvHypospadiasTitle: 'جراحة إصلاح الإحليل السفلي',
+        srvHypospadiasDesc: 'إصلاح وتجميل مجرى البول للأطفال وتعديل الانحناء بأعلى دقة ونسب نجاح ممتازة للمحافظة على الوظائف الطبيعية.',
+        srvCircumTitle: 'الطهارة الجراحية والتجميلية',
+        srvCircumDesc: 'عمليات الختان للأطفال وحديثي الولادة وإصلاح عيوب الطهارة الخاطئة تحت تخدير موضعي أو كلي آمن ومريح.',
+        srvNeonatalTitle: 'عيوب القولون والشرج الخلقية',
+        srvNeonatalDesc: 'تشخيص وعلاج حالات ضيق أو عدم تشكل فتحة الشرج الخلقية ومرض هيرشسبرونغ للرضع جراحياً وخلال المتابعة.',
+        srvOtherTitle: 'استئصال أورام وجراحات حديثي الولادة',
+        srvOtherDesc: 'علاج حالات الطوارئ مثل الزائدة الدودية الحادة وانسداد الأمعاء، واستئصال التشوهات الجسدية والأورام الخلقية بأمان.',
+        titleClinicSchedule: 'مواعيد العمل والعيادة الخارجية',
+        descClinicSchedule: 'تستقبل العيادة الخارجية بمستشفى العريش العام الحالات في المواعيد الرسمية التالية:',
+        tblDay: 'اليوم',
+        tblTime: 'الفترة الزمنية',
+        tblLocation: 'الموقع',
+        daySat: 'السبت إلى الأربعاء',
+        timeMorning: '08:00 صباحاً - 01:00 ظهراً',
+        locOutpatient: 'مبنى العيادات الخارجية - الدور الأول',
+        noteTitle: 'ملاحظة للأهالي:',
+        noteBody: 'يرجى إحضار جميع الفحوصات الطبية السابقة والأشعة والتقارير الطبية الخاصة بالطفل أثناء الزيارة لمساعدتنا في التشخيص الدقيق والسريع.',
+        footerCopyright: '© 2026 قسم جراحة الأطفال - مستشفى العريش العام. جميع الحقوق محفوظة.'
     },
     en: {
         appLogo: 'Pediatric Surgery<br><span style="font-size:0.75rem; font-weight:400; opacity:0.8;">Al-Arish General Hospital</span>',
@@ -175,6 +204,72 @@ const TRANSLATIONS = {
         btnSaveUpdates: 'Save Status Updates',
         drawerSecTimeline: 'Clinical Progress Timeline',
         btnAddFollowup: 'Log Follow-up',
+        modalTitleAdd: 'Register New Patient Case',
+        modalTitleEdit: 'Modify Patient Case Info',
+        modalTitleFollowup: 'Log Follow-up Progress',
+        formName: 'Child Name (Full) *',
+        formAgeYears: 'Age (Years) *',
+        formAgeMonths: 'Additional Months',
+        formWeight: 'Weight (kg)',
+        formPhone: 'Parent Phone Number',
+        formExamDate: 'Diagnosis Exam Date *',
+        formOpType: 'Surgery Category *',
+        formCustomOp: 'Detailed Surgery Description',
+        formDiagnosis: 'Detailed Diagnosis & Clinical Notes',
+        btnCancel: 'Cancel',
+        btnSave: 'Save Case',
+        followupDate: 'Visit Date *',
+        followupNotes: 'Exam Progress & Clinical Notes',
+        chkArchiveCase: 'Archive Case (Fully Recovered / Stop Follow-ups)',
+        confirmReset: 'Are you sure you want to delete ALL patient records? This action is permanent and cannot be undone.',
+        alertSaved: 'Patient case saved successfully!',
+        alertFollowupSaved: 'Follow-up visit logged successfully!',
+        alertStatusUpdated: 'Patient clinical status and dates updated!',
+        alertImported: 'Database imported successfully!',
+        alertResetDone: 'Clinic database has been reset.',
+        alertInvalidBackup: 'Invalid backup file structure.',
+        toastSuccess: 'Success',
+        noFollowups: 'No follow-up visits recorded yet.',
+        visitExam: 'Initial clinical examination',
+        visitScheduled: 'Surgery operation scheduled',
+        visitCompleted: 'Operation completed successfully, follow-up phase started',
+        visitFollowup: 'New follow-up check visit logged',
+        visitArchived: 'Patient archived and medical file closed',
+        yearsOld: 'years',
+        monthsOld: 'months',
+        kg: 'kg',
+        btnLogout: 'Logout',
+        formEmail: 'Email Address',
+        formPassword: 'Password',
+        btnStaffPortal: 'Staff Portal',
+        heroTitle: 'Outstanding Pediatric Surgery Clinic',
+        heroSubtitle: 'Al-Arish General Hospital - Integrated Medical Care & Safe Surgery for Our Children',
+        heroDesc: 'We offer the latest surgical solutions for infants and children with the highest standards of medical safety and precision, under the supervision of specialized surgeons.',
+        btnExploreServices: 'Explore Our Services',
+        titlePublicServices: 'Specialized Surgical Services at the Clinic',
+        srvHerniaTitle: 'Inguinal & Umbilical Hernia',
+        srvHerniaDesc: 'Repair of hernias in infants and children using the latest cosmetic and precise techniques to ensure rapid recovery and avoid complications.',
+        srvTestisTitle: 'Undescended Testis Treatment',
+        srvTestisDesc: 'Early examination and cosmetic orchidopexy to secure the testis in its normal anatomical position to protect its function.',
+        srvHypospadiasTitle: 'Hypospadias Repair Surgery',
+        srvHypospadiasDesc: 'Reconstruction and cosmetic repair of the urethral opening and correction of penile curvature with high success rates.',
+        srvCircumTitle: 'Surgical & Cosmetic Circumcision',
+        srvCircumDesc: 'Newborn and pediatric circumcisions, and revision of previous circumcision defects under safe, comfortable anesthesia.',
+        srvNeonatalTitle: 'Congenital Anorectal & Colon Defects',
+        srvNeonatalDesc: 'Diagnosis and surgical treatment of anorectal malformations and Hirschsprung\'s disease in infants and children.',
+        srvOtherTitle: 'Neonatal Surgery & Tumor Resection',
+        srvOtherDesc: 'Emergency management of acute appendicitis, bowel obstruction, and resection of congenital anomalies & tumors safely.',
+        titleClinicSchedule: 'Clinic Working Schedule',
+        descClinicSchedule: 'Al-Arish General Hospital Outpatient Clinic receives cases during the following official hours:',
+        tblDay: 'Day',
+        tblTime: 'Time',
+        tblLocation: 'Location',
+        daySat: 'Saturday to Wednesday',
+        timeMorning: '08:00 AM - 01:00 PM',
+        locOutpatient: 'Outpatient Clinics Building - First Floor',
+        noteTitle: 'Note for Parents:',
+        noteBody: 'Please bring all previous medical records, scans, and reports during the visit to help us provide a quick and accurate diagnosis.',
+        footerCopyright: '© 2026 Pediatric Surgery Department - Al-Arish General Hospital. All rights reserved.',
         modalTitleAdd: 'Register New Patient Case',
         modalTitleEdit: 'Modify Patient Case Info',
         modalTitleFollowup: 'Log Follow-up Progress',
@@ -331,6 +426,12 @@ class ClinicApp {
         this.loginSubmitBtn = document.getElementById('loginSubmitBtn');
         this.loginSubmitText = document.getElementById('loginSubmitText');
         this.logoutBtn = document.getElementById('logoutBtn');
+        this.closeLoginModalBtn = document.getElementById('closeLoginModalBtn');
+
+        // Public Landing Page Elements
+        this.publicSite = document.getElementById('publicSite');
+        this.openLoginModalBtn = document.getElementById('openLoginModalBtn');
+        this.publicLangSwitchBtn = document.getElementById('publicLangSwitchBtn');
 
         // Modal triggers
         this.openAddPatientModalBtn = document.getElementById('openAddPatientModalBtn');
@@ -422,6 +523,26 @@ class ClinicApp {
             this.langSwitchBtn.addEventListener('click', () => {
                 this.currentLang = this.currentLang === 'ar' ? 'en' : 'ar';
                 this.applyLanguage();
+            });
+        }
+
+        if (this.publicLangSwitchBtn) {
+            this.publicLangSwitchBtn.addEventListener('click', () => {
+                this.currentLang = this.currentLang === 'ar' ? 'en' : 'ar';
+                this.applyLanguage();
+            });
+        }
+
+        // Login Modal triggers
+        if (this.openLoginModalBtn) {
+            this.openLoginModalBtn.addEventListener('click', () => {
+                if (this.loginScreen) this.loginScreen.classList.add('active');
+            });
+        }
+
+        if (this.closeLoginModalBtn) {
+            this.closeLoginModalBtn.addEventListener('click', () => {
+                if (this.loginScreen) this.loginScreen.classList.remove('active');
             });
         }
 
@@ -549,8 +670,16 @@ class ClinicApp {
 
     checkAuth() {
         if (!supabaseClient) {
-            document.body.classList.add('logged-in');
-            if (this.logoutBtn) this.logoutBtn.style.display = 'none';
+            // Local offline mode authentication check
+            const isLocalLoggedIn = localStorage.getItem('local_logged_in') === 'true';
+            if (isLocalLoggedIn) {
+                document.body.classList.add('logged-in');
+                if (this.loginScreen) this.loginScreen.classList.remove('active');
+                this.loadDatabase();
+            } else {
+                document.body.classList.remove('logged-in');
+            }
+            if (this.logoutBtn) this.logoutBtn.style.display = 'flex';
             return;
         }
 
@@ -559,6 +688,7 @@ class ClinicApp {
         supabaseClient.auth.getSession().then(({ data: { session } }) => {
             if (session) {
                 document.body.classList.add('logged-in');
+                if (this.loginScreen) this.loginScreen.classList.remove('active');
                 this.loadDatabase();
             } else {
                 document.body.classList.remove('logged-in');
@@ -568,6 +698,7 @@ class ClinicApp {
         supabaseClient.auth.onAuthStateChange((event, session) => {
             if (session) {
                 document.body.classList.add('logged-in');
+                if (this.loginScreen) this.loginScreen.classList.remove('active');
                 this.loadDatabase();
             } else {
                 document.body.classList.remove('logged-in');
@@ -578,7 +709,30 @@ class ClinicApp {
     }
 
     async handleLogin(email, password) {
-        if (!supabaseClient) return;
+        if (!supabaseClient) {
+            this.loginSubmitBtn.disabled = true;
+            this.loginSubmitText.textContent = this.currentLang === 'ar' ? 'جاري التحقق...' : 'Verifying...';
+            this.loginErrorMsg.style.display = 'none';
+
+            setTimeout(() => {
+                // In local mode, accept any non-empty credential
+                if (email && password) {
+                    localStorage.setItem('local_logged_in', 'true');
+                    document.body.classList.add('logged-in');
+                    if (this.loginScreen) this.loginScreen.classList.remove('active');
+                    this.loadDatabase();
+                    this.showToast(this.currentLang === 'ar' ? 'تم تسجيل الدخول محلياً بنجاح!' : 'Logged in locally successfully!');
+                } else {
+                    this.loginErrorMsg.textContent = this.currentLang === 'ar' 
+                        ? 'خطأ في تسجيل الدخول. يرجى تعبئة جميع الحقول.' 
+                        : 'Authentication failed. Please fill all fields.';
+                    this.loginErrorMsg.style.display = 'block';
+                }
+                this.loginSubmitBtn.disabled = false;
+                this.loginSubmitText.textContent = this.currentLang === 'ar' ? 'تسجيل الدخول' : 'Sign In';
+            }, 400);
+            return;
+        }
 
         this.loginSubmitBtn.disabled = true;
         this.loginSubmitText.textContent = this.currentLang === 'ar' ? 'جاري التحقق...' : 'Verifying...';
@@ -604,7 +758,12 @@ class ClinicApp {
     }
 
     async handleLogout() {
-        if (!supabaseClient) return;
+        if (!supabaseClient) {
+            localStorage.removeItem('local_logged_in');
+            document.body.classList.remove('logged-in');
+            this.showToast(this.currentLang === 'ar' ? 'تم تسجيل الخروج.' : 'Logged out.');
+            return;
+        }
         try {
             await supabaseClient.auth.signOut();
             this.showToast(this.currentLang === 'ar' ? 'تم تسجيل الخروج.' : 'Logged out.');
