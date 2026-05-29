@@ -958,7 +958,7 @@ class ClinicApp {
         
         // Translate Title Tag
         document.getElementById('app-title-tag').textContent = this.currentLang === 'ar' 
-            ? 'جراحة الأطفال - مستشفى العريش العام' 
+            ? 'جراحة الأطفال - مستشفى العريش العام | جراحة الاطفال مستشفى العريش' 
             : 'Pediatric Surgery - Al-Arish General Hospital';
 
         // Translate components
